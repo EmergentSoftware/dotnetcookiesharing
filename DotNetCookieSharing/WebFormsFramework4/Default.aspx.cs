@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Web.Security;
+using System.Web;
 using System.Web.UI;
 
 namespace WebFormsFramework4
@@ -13,8 +13,9 @@ namespace WebFormsFramework4
 
         protected void Signout_Click(object sender, EventArgs e)
         {
-            FormsAuthentication.SignOut();
-            Response.Redirect("Login.aspx");
+            var authenticationManager = HttpContext.Current.GetOwinContext().Authentication;
+            authenticationManager.SignOut();
+            Response.Redirect("~/Logon.aspx");
         }
     }
 }
