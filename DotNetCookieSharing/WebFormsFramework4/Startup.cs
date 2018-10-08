@@ -14,7 +14,8 @@ namespace WebFormsFramework4
             // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=316888
             app.UseCookieAuthentication(new CookieAuthenticationOptions()
             {
-                AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
+                CookieName = ".AspNet.DotNetCookieSharing",
+                AuthenticationType = "Identity.Application",
                 LoginPath = new PathString("/Logon.aspx")
             });
         }
