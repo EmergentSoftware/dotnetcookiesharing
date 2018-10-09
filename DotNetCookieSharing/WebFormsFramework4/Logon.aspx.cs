@@ -26,13 +26,13 @@ namespace WebFormsFramework4
                 // create the identity
                 var identity = new ClaimsIdentity(claims, "Identity.Application");
 
-                Context.GetOwinContext().Authentication.SignIn(new AuthenticationProperties()
+                HttpContext.Current.GetOwinContext().Authentication.SignIn(new AuthenticationProperties()
                 {
                     IsPersistent = Persist.Checked
                 },
                 identity);
 
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect("~/Default.aspx", false);
             }
             else
             {

@@ -14,7 +14,7 @@ namespace WebFormsFramework4
     {
         public void Configuration(IAppBuilder app)
         {
-            
+            ConfigureAuth(app);
         }
 
         public void ConfigureAuth(IAppBuilder app)

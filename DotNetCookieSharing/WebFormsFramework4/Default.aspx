@@ -6,5 +6,5 @@
   <asp:Label ID="Welcome" runat="server" />
     <asp:Button ID="Submit1" OnClick="Signout_Click" 
        Text="Sign Out" runat="server" /><p>
-    <a href="http://localhost:50974/">Razor Pages</a>
+    <a href="http://localhost:50974/Secure">Secure Razor Page</a>
 </asp:Content>
