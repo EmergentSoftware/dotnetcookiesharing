@@ -37,7 +37,7 @@ namespace RazorPagesCore
             services.AddAuthentication("Identity.Application")
                     .AddCookie("Identity.Application", options =>
                     {
-                        options.LoginPath = new PathString("/Account/Login");
+                        options.LoginPath = new PathString("/Logon");
                     }); 
 
             services.AddMvc()
