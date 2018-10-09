@@ -12,4 +12,4 @@ http://localhost:50974/ - razor pages application
 
 From the webforms application, enter in that static credentials username = "alexc" and password "securepass."
 
-Click link to razor pages, and select "Secure menu item." You should see text "Hello alexc"
+Click link to razor pages, and select "Secure" menu item. You should see text "Hello alexc"
