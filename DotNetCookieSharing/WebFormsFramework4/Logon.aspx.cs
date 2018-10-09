@@ -1,10 +1,8 @@
 ﻿using Microsoft.Owin.Security;
-using Microsoft.Owin.Security.Cookies;
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Web;
-using System.Web.Security;
 
 namespace WebFormsFramework4
 {
@@ -20,14 +18,13 @@ namespace WebFormsFramework4
             if ((UserEmail.Text == "alexc") &&
                     (UserPass.Text == "securepass"))
             {
-                // Ideally Security.Membership is leveraged here
                 var claims = new List<Claim>();
                 claims.Add(new Claim(ClaimTypes.Name, UserEmail.Text));
                 claims.Add(new Claim(ClaimTypes.NameIdentifier, UserEmail.Text));
                 claims.Add(new Claim(ClaimTypes.Role, "Administrator"));
 
                 // create the identity
-                var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationType);
+                var identity = new ClaimsIdentity(claims, "Identity.Application");
 
                 Context.GetOwinContext().Authentication.SignIn(new AuthenticationProperties()
                 {

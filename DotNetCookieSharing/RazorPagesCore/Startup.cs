@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
@@ -24,24 +23,27 @@ namespace RazorPagesCore
         {
             services.Configure<CookiePolicyOptions>(options =>
             {
-                options.MinimumSameSitePolicy = SameSiteMode.None;
+                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
             services.AddDataProtection()
                 .PersistKeysToFileSystem(GetKeyRingDirInfo())
-                .SetApplicationName("DotNetCookieSharing");
+                .SetApplicationName("SharedCookieApp");
 
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(options =>
-                {
-                    options.Cookie.Name = ".AspNet.SharedCookie";
-                    options.LoginPath = new PathString("/Logon");
-                });
+            services.ConfigureApplicationCookie(options => {
+                options.Cookie.Name = ".AspNet.SharedCookie";
+            });
+
+            services.AddAuthentication("Identity.Application")
+                    .AddCookie("Identity.Application", options =>
+                    {
+                        options.LoginPath = new PathString("/Account/Login");
+                    }); 
 
             services.AddMvc()
                 .AddRazorPagesOptions(options =>
                 {
-                    options.Conventions.AuthorizePage("/Contact");
+                    options.Conventions.AuthorizePage("/Secure");
                 });
         }
 
