@@ -15,8 +15,7 @@ namespace WebFormsFramework4
             app.UseCookieAuthentication(new CookieAuthenticationOptions()
             {
                 CookieName = ".AspNet.DotNetCookieSharing",
-                AuthenticationMode = Microsoft.Owin.Security.AuthenticationMode.Active,
-                AuthenticationType = "Identity.Application",
+                AuthenticationType = CookieAuthenticationDefaults.AuthenticationType,
                 LoginPath = new PathString("/Logon.aspx")
             });
         }

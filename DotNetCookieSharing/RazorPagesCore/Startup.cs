@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
@@ -30,8 +31,8 @@ namespace RazorPagesCore
                 .PersistKeysToFileSystem(GetKeyRingDirInfo())
                 .SetApplicationName("DotNetCookieSharing");
 
-            services.AddAuthentication("Identity.Application")
-                .AddCookie("Identity.Application", options =>
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
                 {
                     options.Cookie.Name = ".AspNet.SharedCookie";
                     options.LoginPath = new PathString("/Logon");
