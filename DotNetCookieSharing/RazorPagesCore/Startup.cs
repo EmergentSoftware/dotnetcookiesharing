@@ -3,6 +3,7 @@ using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -20,14 +21,27 @@ namespace RazorPagesCore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+
             services.AddDataProtection()
                 .PersistKeysToFileSystem(GetKeyRingDirInfo())
                 .SetApplicationName("DotNetCookieSharing");
 
-            services.ConfigureApplicationCookie(options => {
-                options.Cookie.Name = ".AspNet.DotNetCookieSharing";
-            });
-            services.AddMvc();
+            services.AddAuthentication("Identity.Application")
+                .AddCookie("Identity.Application", options =>
+                {
+                    options.Cookie.Name = ".AspNet.SharedCookie";
+                    options.LoginPath = new PathString("/Logon");
+                });
+
+            services.AddMvc()
+                .AddRazorPagesOptions(options =>
+                {
+                    options.Conventions.AuthorizePage("/Contact");
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,7 +59,15 @@ namespace RazorPagesCore
 
             app.UseStaticFiles();
 
-            app.UseMvc();
+            app.UseCookiePolicy();
+            app.UseAuthentication();
+
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
+            });
         }
 
         // For demonstration purposes only.
